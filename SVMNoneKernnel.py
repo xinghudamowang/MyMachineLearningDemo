@@ -1,4 +1,5 @@
 import numpy as np
+from random import *
 def loadDataSet(fileName):
 	dataMat = []
 	labelMat = []
@@ -27,7 +28,7 @@ def smoSimple(dataMatIn, classLables, C, toler, maxIter):# data  lael the num C 
 	labelMat = np.mat(classLables).transpose()#change to matrix then transpose
 	b = 0
 	m,n = np.shape(dataMatrix)
-	alphas = np.mat(zeros((m,1)))#a mat of alpha  
+	alphas = np.mat(np.zeros((m,1)))#a mat of alpha  
 	iter = 0 #this take note of the traverse num of the data set without any change of the alpha
 	while(iter <maxIter):
 		alphaPairsChanged = 0#in each loop this will be set as 0 and this take note whether the alpha has changed or not
@@ -87,13 +88,13 @@ class optStruct:
 		self.labelMat = classLables
 		self.C = C
 		self.tol = toler
-		self.m = shape(dataMatIn)[0]
-		self.alphas = mat(zeros((self.m,1)))
+		self.m = np.shape(dataMatIn)[0]
+		self.alphas = np.mat(np.zeros((self.m,1)))
 		self.b = 0
-		self.eCache = mat(zeros((self.m ,2)))
+		self.eCache = np.mat(np.zeros((self.m ,2)))
 
 def calcEk(oS, k ):#os is an object of class optstruct
-	fXk = float(multiply(oS.alphas,oS.labelMat)).T*(oS.X*oS.X[k,:].T) + oS.b
+	fXk = float(np.multiply(oS.alphas,oS.labelMat)).T*(oS.X*oS.X[k,:].T) + oS.b
 	Ek = fXk - float(oS.labelMat[k])
 	return Ek
 def selectJ(i , oS , Ei):
@@ -177,7 +178,7 @@ def smoP(dataMatIn , classLables , C , toler , maxIter , kTup = ('lin',0)):
 			print "fullset iter %d i %d pairs changed %d"%(iter , i ,alphaPairsChanged)
 			iter += 1
 		else:
-			nonBoundIs = nonzero((oS.alphas.A > 0) * (oS.alphas.A <C))[0]
+			nonBoundIs = np.nonzero((oS.alphas.A > 0) * (oS.alphas.A <C))[0]
 			for i in nonBoundIs:
 				alphaPairsChanged += innerL(i,oS)
 				print "non_bound iter %d i %d pairs changed %d "%(iter , i alphaPairsChanged)
@@ -194,5 +195,5 @@ def calcWs(alphas , dataArr ,classLabels):
 	m,n = np.shape(X)
 	w = np.zeros((n,1))
 	for i in range(m):
-		w += multiply(alphas[i]*labelMat[i],X[i,:].T)
+		w += np.multiply(alphas[i]*labelMat[i],X[i,:].T)
 	return w
