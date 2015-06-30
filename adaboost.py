@@ -39,7 +39,7 @@ def buildStump(dataArr , classLabels , D):
 					bestStump['ineq'] = inequal
 	return bestStump , minError , bestClassEst
 
-def adaBoostTrainsDS(dataArr , classLabels , numIt = 40): #the numIt means the num of iterate
+def adaBoostTrainsDS(dataArr , classLabels , numIt): #the numIt means the num of iterate
 	weakClassArr = []
 	m = np.shape(dataArr)[0]
 	D = np.mat(np.ones((m,1))/m)
@@ -68,8 +68,9 @@ def adaClassify(datToClass , classfierArr):
 	dataMatrix = np.mat(datToClass)
 	m = np.shape(dataMatrix)[0]
 	aggClassEst = np.mat(np.zeros((m,1)))
-	for i  in rnage(len(classfierArr)):
+	for i  in range(len(classfierArr)):
 		classEst = stumpClassify(dataMatrix , classfierArr[i]['dim'] , classfierArr[i]['thresh'], classfierArr[i]['ineq'])
 		aggClassEst += classfierArr[i]['alpha']*classEst
 		print aggClassEst
 	return np.sign(aggClassEst)
+#classifier  = adaBoostTrainsDS(dataArr , classLabels , numIt )
