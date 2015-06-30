@@ -102,7 +102,7 @@ def selectJ(i , oS , Ei):
 	maxDeltaE = 0
 	Ej = 0
 	oS.eCache[i] = [1, Ei]
-	validEcacheList = nonzero(oS.eCache[:,0].A)[0]
+	validEcacheList = np.nonzero(oS.eCache[:,0].A)[0]
 	if (len(validEcacheList))>1:
 		for  k in validEcacheList:
 			if k == i:
