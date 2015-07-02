@@ -1,2 +1,3 @@
 # MyMachineLearningDemo
 机器学习算法代码
+计算都由numpy完成，数据结构为numpy中的mat  以及array
